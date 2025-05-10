@@ -1,5 +1,5 @@
 "use server";
-import { signIn } from "@/lib/auth";
+import { signIn } from "@/auth";
 
 
 export async function handleAuth( provider: string) {
