@@ -60,7 +60,7 @@ const data = {
         },
         {
           title: "Cadastrar Paciente",
-          url: "/psicologos/cadastro",
+          url: "/psicologos/add-paciente",
           isActive: false,
         },
         {
