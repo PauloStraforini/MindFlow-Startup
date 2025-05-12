@@ -1,359 +1,432 @@
-"use client"
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { FaIdCard, FaCalendarAlt, FaUser } from "react-icons/fa"
-import { MdAppRegistration } from "react-icons/md"
-import { ArrowLeft, Mail, Phone, MapPin } from "lucide-react"
+"use client";
+import { useState, useEffect } from "react";
+import {
+  MoreHorizontal,
+  Edit,
+  Trash2,
+  RefreshCw,
+  Users,
+  FileText,
+  Plus,
+  Search,
+  Filter,
+} from "lucide-react";
 
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
-import axios from 'axios';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-import { toast } from "sonner"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
-import { AppSidebar } from "@/components/ui/app-sidebar"
-import { Separator } from "@/components/ui/separator"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import AxiosError from "axios"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-const createPacienteFormSchema = z.object({
-  nome: z.string().min(1, {
-    message: "O campo nome é obrigatório",
-  }),
-  cpf: z.string().min(1, {
-    message: "O campo de CPF é obrigatório",
-  }),
-  email: z.string().email({
-    message: "Formato de e-mail inválido",
-  }),
-  dataNascimento: z.coerce.date({
-    invalid_type_error: "Data inválida",
-  }),
-  telefone: z.string().optional(),
-  endereco: z.string().optional(),
-})
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-type IcreatePacienteForm = z.infer<typeof createPacienteFormSchema>
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
-export default function CadastroPaciente() {
-  const router = useRouter()
+import EditPacienteModal from "./components/edit-paciente-modal";
+import DeletePacienteModal from "./components/delete-paciente-modal";
+import CreatePacienteModal from "./components/create-paciente-modal";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { api } from "@/lib/axios";
 
-  const [pacientes, setPacientes] = useState<{ id?: string; nome: string; cpf: string; email: string; dataNascimento: string; telefone?: string }[] | null>([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  const carregarPacientes = async () => {
-    try {
-      setIsLoading(true)
-      const response = await axios.get<{ id?: string; nome: string; cpf: string; email: string; dataNascimento: string; telefone?: string }[]>("/api/create-paciente") // Update the endpoint to the correct path
-      setPacientes(response.data)
-    } catch (error) {
-      console.error("Erro ao carregar pacientes:", error)
-      toast.error("Não foi possível carregar a lista de pacientes")
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    carregarPacientes()
-  }, [])
-
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<IcreatePacienteForm>({
-    resolver: zodResolver(createPacienteFormSchema),
-  })
-
-const handleCreatePaciente = async (data: IcreatePacienteForm) => {
-  try {
-    console.log("📤 Enviando dados:", data);
-    const response = await axios.post("/api/create-paciente", {
-      ...data,
-      dataNascimento: new Date(data.dataNascimento).toISOString(),
-    });
-    toast.success("Paciente cadastrado com sucesso!");
-    reset();
-    carregarPacientes(); // Recarrega a lista após cadastrar
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      const errorMessage = await (await error).data.message
-      toast.error("Erro ao cadastrar paciente. Verifique os dados.");
-    } else {
-      console.error("❌ Erro inesperado:", error);
-      toast.error("Erro ao cadastrar paciente. Tente novamente.");
-    }
-  }
+type Ipaciente = {
+  id: number;
+  nome: string;
+  cpf: string;
+  email: string;
+  telefone?: string;
+  dataNascimento: string;
+  endereco?: string;
+  createdAt: string;
 };
 
+export default function AddPacientePage() {
+  const queryClient = useQueryClient();
+
+  const {
+    data: paciente,
+    isLoading,
+    error,
+  } = useQuery<Ipaciente[]>({
+    queryKey: ["add-paciente"],
+    queryFn: async (): Promise<Ipaciente[]> => {
+      const response = await api.get<Ipaciente[]>("/psicologos/add-paciente");
+      return response.data;
+    },
+  });
+
+  const [isEditPacienteModalOpen, setIsEditPacienteModalOpen] = useState(false);
+  const [isDeletePacienteModalOpen, setIsDeletePacienteModalOpen] =
+    useState(false);
+  const [isCreatePacienteModalOpen, setIsCreatePacienteModalOpen] =
+    useState(false);
+
+  const [currentPacienteId, setCurrentPacienteId] = useState<number | null>(
+    null
+  );
+
+  const handleOpenEditPacienteModal = (PacienteId: number) => {
+    setCurrentPacienteId(PacienteId);
+    setIsEditPacienteModalOpen(true);
+  };
+
+  const handleOpenDeletePacienteModal = (PacienteId: number) => {
+    setCurrentPacienteId(PacienteId);
+    setIsDeletePacienteModalOpen(true);
+  };
+
+  const loadPacientes = async () => {
+    try {
+      queryClient.invalidateQueries({
+        queryKey: ["pacientes"],
+      });
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  };
+
+  useEffect(() => {
+    loadPacientes();
+  }, []);
+
+  const handleResetFilters = () => {
+    loadPacientes();
+  };
+
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-pink-100 dark:border-pink-800 px-4 bg-white dark:bg-pink-950/50">
-          <SidebarTrigger className="-ml-1 text-gray-600 hover:text-pink-600 dark:text-gray-400 dark:hover:text-pink-400" />
-          <Separator orientation="vertical" className="mr-2 h-4 bg-pink-200 dark:bg-pink-700" />
-          <div className="ml-auto">
-            <Link href="/pacientes">
-              <button className="flex items-center gap-1 px-3 py-1.5 rounded-md bg-pink-50 hover:bg-pink-100 text-pink-600 text-sm font-medium transition-colors">
-                <ArrowLeft className="size-4" />
-                <span>Voltar</span>
-              </button>
-            </Link>
-          </div>
-        </header>
-
-        <div className="flex flex-1 flex-col gap-4 p-4 bg-gradient-to-b from-slate-50 to-pink-50 dark:from-pink-950 dark:to-pink-900 min-h-screen">
-          <div className=" gap-4 ">
-            {/* Form Card */}
-            <Card className=" bg-white dark:bg-pink-900/50 border-pink-100 dark:border-pink-800">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl font-bold text-pink-900 dark:text-pink-100 flex items-center gap-2">
-                  <MdAppRegistration className="size-5 text-pink-600 dark:text-pink-400" />
-                  Cadastro de Novo Paciente
-                </CardTitle>
-                <CardDescription className="text-gray-600 dark:text-gray-300">
-                  Preencha os dados abaixo para cadastrar um novo paciente no sistema
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form className="space-y-5" onSubmit={handleSubmit(handleCreatePaciente)}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    {/* Nome */}
-                    <div>
-                      <label htmlFor="nome" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Nome
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <FaUser className="size-4 text-pink-500" />
-                        </div>
-                        <input
-                          id="nome"
-                          type="text"
-                          disabled={isSubmitting}
-                          placeholder="Nome completo"
-                          {...register("nome", { required: true })}
-                          className={`appearance-none block w-full px-3 py-2.5 pl-10 border ${
-                            errors.nome ? "border-red-500" : "border-pink-200 dark:border-pink-700"
-                          } rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm text-gray-800 dark:text-white dark:bg-pink-950/30 transition-all duration-200`}
-                        />
-                      </div>
-                      {errors.nome && <p className="mt-1 text-sm text-red-600">{errors.nome.message}</p>}
-                    </div>
-
-                    {/* CPF */}
-                    <div>
-                      <label htmlFor="cpf" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        CPF
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <FaIdCard className="size-4 text-pink-500" />
-                        </div>
-                        <input
-                          id="cpf"
-                          type="text"
-                          disabled={isSubmitting}
-                          placeholder="000.000.000-00"
-                          {...register("cpf", { required: true })}
-                          className={`appearance-none block w-full px-3 py-2.5 pl-10 border ${
-                            errors.cpf ? "border-red-500" : "border-pink-200 dark:border-pink-700"
-                          } rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm text-gray-800 dark:text-white dark:bg-pink-950/30 transition-all duration-200`}
-                        />
-                      </div>
-                      {errors.cpf && <p className="mt-1 text-sm text-red-600">{errors.cpf.message}</p>}
-                    </div>
-
-                    {/* Email */}
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                      >
-                        Email
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Mail className="size-4 text-pink-500" />
-                        </div>
-                        <input
-                          id="email"
-                          type="email"
-                          disabled={isSubmitting}
-                          placeholder="email@exemplo.com"
-                          {...register("email", { required: true })}
-                          className={`appearance-none block w-full px-3 py-2.5 pl-10 border ${
-                            errors.email ? "border-red-500" : "border-pink-200 dark:border-pink-700"
-                          } rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm text-gray-800 dark:text-white dark:bg-pink-950/30 transition-all duration-200`}
-                        />
-                      </div>
-                      {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
-                    </div>
-
-                    {/* Data de Nascimento */}
-                    <div>
-                      <label
-                        htmlFor="dataNascimento"
-                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                      >
-                        Data de Nascimento
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <FaCalendarAlt className="size-4 text-pink-500" />
-                        </div>
-                        <input
-                          id="dataNascimento"
-                          type="date"
-                          disabled={isSubmitting}
-                          {...register("dataNascimento")}
-                          className={`appearance-none block w-full px-3 py-2.5 pl-10 border ${
-                            errors.dataNascimento ? "border-red-500" : "border-pink-200 dark:border-pink-700"
-                          } rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm text-gray-800 dark:text-white dark:bg-pink-950/30 transition-all duration-200`}
-                        />
-                      </div>
-                      {errors.dataNascimento && (
-                        <p className="mt-1 text-sm text-red-600">{errors.dataNascimento.message}</p>
-                      )}
-                    </div>
-
-                    {/* Telefone */}
-                    <div>
-                      <label
-                        htmlFor="telefone"
-                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                      >
-                        Telefone
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Phone className="size-4 text-pink-500" />
-                        </div>
-                        <input
-                          id="telefone"
-                          type="text"
-                          disabled={isSubmitting}
-                          placeholder="(00) 00000-0000"
-                          {...register("telefone")}
-                          className={`appearance-none block w-full px-3 py-2.5 pl-10 border ${
-                            errors.telefone ? "border-red-500" : "border-pink-200 dark:border-pink-700"
-                          } rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm text-gray-800 dark:text-white dark:bg-pink-950/30 transition-all duration-200`}
-                        />
-                      </div>
-                      {errors.telefone && <p className="mt-1 text-sm text-red-600">{errors.telefone.message}</p>}
-                    </div>
-
-                    {/* Endereço */}
-                    <div>
-                      <label
-                        htmlFor="endereco"
-                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                      >
-                        Endereço
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <MapPin className="size-4 text-pink-500" />
-                        </div>
-                        <input
-                          id="endereco"
-                          type="text"
-                          disabled={isSubmitting}
-                          placeholder="Endereço completo"
-                          {...register("endereco")}
-                          className={`appearance-none block w-full px-3 py-2.5 pl-10 border ${
-                            errors.endereco ? "border-red-500" : "border-pink-200 dark:border-pink-700"
-                          } rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm text-gray-800 dark:text-white dark:bg-pink-950/30 transition-all duration-200`}
-                        />
-                      </div>
-                      {errors.endereco && <p className="mt-1 text-sm text-red-600">{errors.endereco.message}</p>}
-                    </div>
-                  </div>
-
-                  {/* Submit Button */}
-                  <div className="mt-5">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className={`w-full py-2 px-4 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 transition duration-200 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
-                    >
-                      {isSubmitting ? "Cadastrando..." : "Cadastrar Paciente"}
-                    </button>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
-
-            {/* Tabela de Pacientes */}
-            <Card className="md:col-span-3 bg-white mt-4 dark:bg-pink-900/50 border-pink-100 dark:border-pink-800">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl font-bold text-pink-900 dark:text-pink-100 flex items-center gap-2">
-                  <FaUser className="size-5 text-pink-600 dark:text-pink-400" />
-                  Pacientes Cadastrados
-                </CardTitle>
-                <CardDescription className="text-gray-600 dark:text-gray-300">
-                  Lista de todos os pacientes cadastrados no sistema
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {isLoading ? (
-                  <div className="flex justify-center items-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-600"></div>
-                  </div>
-                ) : (pacientes && pacientes.length === 0) ? (
-                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                    Nenhum paciente cadastrado ainda.
-                  </div>
-                ) : (
-                    <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                      <thead>
-                      <tr className="bg-pink-50 dark:bg-pink-800/50 text-left">
-                        <th className="px-4 py-3 text-sm font-medium text-pink-900 dark:text-pink-100">Nome</th>
-                        <th className="px-4 py-3 text-sm font-medium text-pink-900 dark:text-pink-100">CPF</th>
-                        <th className="px-4 py-3 text-sm font-medium text-pink-900 dark:text-pink-100">Email</th>
-                        <th className="px-4 py-3 text-sm font-medium text-pink-900 dark:text-pink-100">
-                        Data de Nascimento
-                        </th>
-                        <th className="px-4 py-3 text-sm font-medium text-pink-900 dark:text-pink-100">Telefone</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      {Array.isArray(pacientes) && pacientes.map((paciente, index) => (
-                        <tr
-                        key={paciente.id || index}
-                        className={`border-b border-pink-100 dark:border-pink-800 ${
-                          index % 2 === 0 ? "bg-white dark:bg-pink-900/30" : "bg-pink-50/50 dark:bg-pink-900/50"
-                        } hover:bg-pink-100 dark:hover:bg-pink-800/50 transition-colors`}
-                        >
-                        <td className="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">{paciente.nome}</td>
-                        <td className="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">{paciente.cpf}</td>
-                        <td className="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">{paciente.email}</td>
-                        <td className="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">
-                          {new Date(paciente.dataNascimento).toLocaleDateString("pt-BR")}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">
-                          {paciente.telefone || "-"}
-                        </td>
-                        </tr>
-                      ))}
-                      </tbody>
-                    </table>
-                    </div>
-                )}
-              </CardContent>
-            </Card>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
+      <header className="bg-white border-b border-purple-100 shadow-sm">
+        <div className="container mx-auto py-5 px-6">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold text-purple-900 flex items-center">
+              <svg
+                viewBox="0 0 24 24"
+                className="h-7 w-7 mr-3 text-purple-600"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" />
+                <path d="M15 9L9 15" />
+                <path d="M9 9L15 15" />
+              </svg>
+              MINDFLOW
+            </h1>
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => loadPacientes()}
+                className="border-purple-200 text-purple-700 hover:bg-purple-50 hover:text-purple-800"
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Atualizar
+              </Button>
+            </div>
           </div>
         </div>
-      </SidebarInset>
-    </SidebarProvider>
-  )
+      </header>
+
+      <main className="container mx-auto py-8 px-6">
+        <Card className="mb-8 shadow-md border-none overflow-hidden bg-white">
+          <CardHeader className="pb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+            <CardTitle className="text-2xl font-medium">
+              Gerenciamento de Pacientes
+            </CardTitle>
+            <CardDescription className="text-purple-50">
+              Visualize, adicione, edite e remova pacientes do sistema
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-0">
+            <Tabs value={"list"} className="w-full">
+              <div className="border-b border-purple-100 px-6 bg-white">
+                <TabsList className="bg-transparent h-12">
+                  <TabsTrigger
+                    value="list"
+                    className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-purple-500 data-[state=active]:text-purple-700 data-[state=active]:shadow-none rounded-none h-12 text-gray-600"
+                  >
+                    <FileText className="size-4 mr-2" />
+                    Lista de Pacientes
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+
+              <TabsContent value="list" className="p-6 pt-4">
+                <div className="mb-6">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-4">
+                    <div className="flex items-center">
+                      <h3 className="text-lg font-medium text-purple-800">
+                        Pacientes cadastrados
+                      </h3>
+                      <Badge
+                        variant="outline"
+                        className="ml-3 bg-purple-50 text-purple-700 border-purple-200"
+                      >
+                        {Array.isArray(paciente) ? paciente.length : 0} itens
+                      </Badge>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Input
+                          placeholder="Buscar serviço..."
+                          className="pl-9 w-full sm:w-64 border-purple-200 focus-visible:ring-purple-500"
+                        />
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="border-purple-200 text-purple-700 hover:bg-purple-50"
+                      >
+                        <Filter className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator className="my-6 bg-purple-100" />
+
+                {isLoading ? (
+                  <div className="flex justify-center py-12">
+                    <div className="flex flex-col items-center">
+                      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500 mb-4"></div>
+                      <p className="text-purple-700">
+                        Carregando todos os Pacientes...
+                      </p>
+                    </div>
+                  </div>
+                ) : error ? (
+                  <div className="bg-red-50 p-6 rounded-lg text-center">
+                    <div className="text-red-500 mb-4 text-lg font-medium">
+                      {error.message}
+                    </div>
+                    <Button
+                      variant="outline"
+                      onClick={() => loadPacientes()}
+                      className="border-red-200 text-red-600 hover:bg-red-50"
+                    >
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      Tentar novamente
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="rounded-md border border-purple-100 overflow-hidden">
+                    <Table>
+                      <TableHeader className="bg-purple-50">
+                        <TableRow className="hover:bg-purple-50/80">
+                          <TableHead className="font-semibold text-purple-900 w-32">
+                            CPF
+                          </TableHead>
+                          <TableHead className="font-semibold text-purple-900 w-48">
+                            Nome
+                          </TableHead>
+                          <TableHead className="font-semibold text-purple-900 w-48">
+                            Data de Nascimento
+                          </TableHead>
+                          <TableHead className="font-semibold text-purple-900 w-48">
+                            Email
+                          </TableHead>
+                          <TableHead className="font-semibold text-center w-24">
+                            Telefone
+                          </TableHead>
+                          <TableHead className="font-semibold text-center w-48">
+                            Endereço
+                          </TableHead>
+
+                          <TableHead className="font-semibold text-center w-24 text-purple-900">
+                            Ações
+                          </TableHead>
+                          <TableHead className="font-medium w-10">
+                            <Dialog
+                              open={isCreatePacienteModalOpen}
+                              onOpenChange={setIsCreatePacienteModalOpen}
+                            >
+                              <DialogTrigger asChild>
+                                <Button
+                                  variant="secondary"
+                                  type="button"
+                                  size="icon"
+                                  className="cursor-pointer bg-purple-500 hover:bg-purple-600 text-white"
+                                >
+                                  <Plus />
+                                </Button>
+                              </DialogTrigger>
+
+                              <CreatePacienteModal
+                                isOpen={isCreatePacienteModalOpen}
+                                onSetIsCreatePacienteModalOpen={
+                                  setIsCreatePacienteModalOpen
+                                }
+                              />
+                            </Dialog>
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {/* Verifique se "paciente" é um array e não está vazio */}
+                        {Array.isArray(paciente) && paciente.length > 0 ? (
+                          paciente.map(
+                            ({
+                              id,
+                              nome,
+                              cpf,
+                              dataNascimento,
+                              endereco,
+                              email,
+                              telefone,
+                            }) => (
+                              <TableRow
+                                key={id}
+                                className="hover:bg-purple-50/50 transition-colors border-b border-purple-100"
+                              >
+                                <TableCell className="py-4 text-sm font-medium text-purple-900">
+                                  {cpf}
+                                </TableCell>
+                                <TableCell className="py-4 text-sm font-medium text-purple-900">
+                                  {nome}
+                                </TableCell>
+                                <TableCell className="py-4 text-sm font-medium text-purple-900">
+                                  {new Date(dataNascimento).toLocaleDateString(
+                                    "pt-BR"
+                                  )}
+                                </TableCell>
+                                <TableCell className="py-4 text-sm font-medium text-purple-900">
+                                  {email}
+                                </TableCell>
+                                <TableCell className="py-4 text-sm font-medium text-purple-900">
+                                  {telefone}
+                                </TableCell>
+                                <TableCell className="py-4 text-sm font-medium text-purple-900">
+                                  {endereco}
+                                </TableCell>
+
+                                <TableCell className="text-center py-4">
+                                  <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-8 w-8 hover:bg-purple-100 hover:text-purple-700"
+                                      >
+                                        <MoreHorizontal className="h-4 w-4 text-purple-600" />
+                                        <span className="sr-only">
+                                          Abrir menu
+                                        </span>
+                                      </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent
+                                      align="end"
+                                      className="border-purple-100"
+                                    >
+                                      <DropdownMenuItem
+                                        onClick={() =>
+                                          handleOpenEditPacienteModal(id)
+                                        }
+                                        className="hover:bg-purple-50 hover:text-purple-700 cursor-pointer"
+                                      >
+                                        <Edit className="mr-2 size-4" />
+                                        Editar
+                                      </DropdownMenuItem>
+                                      <DropdownMenuItem
+                                        onClick={() =>
+                                          handleOpenDeletePacienteModal(id)
+                                        }
+                                        className="text-red-600 hover:text-red-700 hover:bg-red-50 cursor-pointer"
+                                      >
+                                        <Trash2 className="mr-2 size-4" />
+                                        Excluir
+                                      </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                  </DropdownMenu>
+                                </TableCell>
+                              </TableRow>
+                            )
+                          )
+                        ) : (
+                          <TableRow>
+                            <TableCell
+                              colSpan={7}
+                              className="text-center py-16 text-purple-700"
+                            >
+                              <div className="flex flex-col items-center">
+                                <Users className="h-12 w-12 text-purple-300 mb-3" />
+                                <p className="text-lg font-medium mb-1">
+                                  Nenhum paciente encontrado
+                                </p>
+                                <p className="text-sm text-purple-600 mb-4">
+                                  Adicione um novo paciente ou ajuste os filtros
+                                </p>
+                                <Button
+                                  variant="outline"
+                                  onClick={() => {
+                                    handleResetFilters();
+                                    loadPacientes();
+                                  }}
+                                  className="mt-2 border-purple-200 text-purple-700 hover:bg-purple-50"
+                                >
+                                  <RefreshCw className="mr-2 h-4 w-4" />
+                                  Limpar filtros e tentar novamente
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+      </main>
+
+      {/* Edit Dialog */}
+      <Dialog
+        open={isEditPacienteModalOpen}
+        onOpenChange={setIsEditPacienteModalOpen}
+      >
+        <EditPacienteModal
+          id={currentPacienteId}
+          isOpen={isEditPacienteModalOpen}
+          onSetIsEditPacienteModalOpen={setIsEditPacienteModalOpen}
+        />
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={isDeletePacienteModalOpen}
+        onOpenChange={setIsDeletePacienteModalOpen}
+      >
+        <DeletePacienteModal
+          id={currentPacienteId}
+          isOpen={isDeletePacienteModalOpen}
+          onSetIsDeletePacienteModalOpen={setIsDeletePacienteModalOpen}
+        />
+      </Dialog>
+    </div>
+  );
 }
