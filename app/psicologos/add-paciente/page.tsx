@@ -10,7 +10,7 @@ import { ArrowLeft, Mail, Phone, MapPin } from "lucide-react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 import { toast } from "sonner"
 
@@ -18,6 +18,7 @@ import { AppSidebar } from "@/components/ui/app-sidebar"
 import { Separator } from "@/components/ui/separator"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import AxiosError from "axios"
 
 const createPacienteFormSchema = z.object({
   nome: z.string().min(1, {
@@ -83,14 +84,7 @@ const handleCreatePaciente = async (data: IcreatePacienteForm) => {
     carregarPacientes(); // Recarrega a lista após cadastrar
   } catch (error) {
     if (error instanceof AxiosError) {
-      const errorMessage = (error as AxiosError)?.response?.data?.message || "Erro desconhecido";
-      const errorDetails = (error as AxiosError)?.response?.data?.errors || [];
-      console.error("❌ Erro inesperado:", errorMessage);
-      if (errorDetails.length > 0) {
-        errorDetails.forEach((err: any) => {
-          console.error(`${err.path}: ${err.message}`);
-        });
-      }
+      const errorMessage = await (await error).data.message
       toast.error("Erro ao cadastrar paciente. Verifique os dados.");
     } else {
       console.error("❌ Erro inesperado:", error);
