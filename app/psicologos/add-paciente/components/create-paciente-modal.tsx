@@ -29,7 +29,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import {  } from "axios"
+import { AxiosError } from "axios"
 
 type IcreatePacienteProps = {
   isOpen: boolean;

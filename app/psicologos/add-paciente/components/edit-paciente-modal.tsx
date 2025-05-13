@@ -38,7 +38,7 @@ import {
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import {  } from 'axios'
+import { AxiosError } from 'axios'
 
 const editPacieneBodySchema = z.object({
     nome: z.string().min(1, {
