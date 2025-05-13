@@ -19,7 +19,7 @@ model Paciente {
   cpf            String   @unique
   email          String   @unique
   telefone       String?
-  dataNascimento DateTime
+  dataNascimento DateTime  @db.Date
   endereco       String?
   createdAt      DateTime @default(now())
 }
