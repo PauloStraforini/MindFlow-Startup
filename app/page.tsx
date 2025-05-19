@@ -38,6 +38,7 @@ import Apoio from "@/components/images/Psychologist-amico.svg";
 import Logo from "@/components/images/Logo1.png";
 import Chat from "@/components/images/ChatGPT Image 4 de abr. de 2025, 11_26_40.png";
 import Psico from "@/components/images/ChatGPT Image 4 de abr. de 2025, 10_50_38.png";
+import Header from "@/components/header";
 // import useMercadoPago from "@/hooks/useMercadoPago";
 
 export default function Home() {
@@ -92,112 +93,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-purple-50 text-gray-800 overflow-x-hidden">
       {/* Header */}
-      <header
-        className={`${
-          isScrolled
-            ? "bg-white/90 backdrop-blur-md shadow-lg border-b border-pink-100"
-            : "bg-transparent"
-        } text-gray-800 sticky top-0 z-50 transition-all duration-300`}
-      >
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-2xl font-bold flex items-center gap-2 transition-transform hover:scale-105"
-          >
-            <Image
-              src={Logo || "/placeholder.svg"}
-              alt="MindFlow Logo"
-              width={80}
-              height={80}
-              className="ml-2"
-            />
-            <span className="bg-gradient-to-r from-rose-500 to-purple-800 bg-clip-text text-transparent font-extrabold">
-              MindFlow
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {[
-              "inicio",
-              "funcionalidades",
-              "beneficios",
-              "depoimentos",
-              "precos",
-              "contato",
-            ].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item)}
-                className={`${
-                  activeSection === item
-                    ? "text-pink-600 font-medium"
-                    : "text-gray-600"
-                } hover:text-pink-600 transition-colors relative py-1`}
-              >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
-                {activeSection === item && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-pink-400 rounded-full"></span>
-                )}
-              </button>
-            ))}
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-pink-600 p-2 focus:outline-none"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
-
-          {/* CTA Button */}
-          <Link href="psicologos/cadastro">
-            <button className="hidden md:block bg-gradient-to-r from-rose-500 to-purple-800 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-2.5 px-6 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-pink-200 transform hover:-translate-y-1">
-              Experimente Grátis
-            </button>
-          </Link>
-        </div>
-
-        {/* Mobile Navigation */}
-        <div
-          className={`md:hidden absolute w-full bg-white border-b border-pink-100 shadow-lg transition-all duration-300 ease-in-out ${
-            isMenuOpen
-              ? "max-h-screen py-4 opacity-100"
-              : "max-h-0 py-0 opacity-0 overflow-hidden"
-          }`}
-        >
-          <div className="container mx-auto px-4 flex flex-col space-y-4">
-            {[
-              "inicio",
-              "funcionalidades",
-              "beneficios",
-              "depoimentos",
-              "precos",
-              "contato",
-            ].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item)}
-                className={`${
-                  activeSection === item
-                    ? "text-pink-600 font-medium"
-                    : "text-gray-600"
-                } hover:text-pink-600 transition-colors py-2 text-left`}
-              >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
-              </button>
-            ))}
-            <button className="bg-gradient-to-r from-pink-400 to-purple-400 text-white font-bold py-3 px-6 rounded-full w-full mt-2">
-              Experimente Grátis
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main>
         {/* Hero Section */}
