@@ -14,6 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Calendar, Clock, FileText, Users, TrendingUp, BrainCircuit, CheckCircle2, AlertCircle } from "lucide-react"
 import { auth } from "@/auth"
  import { redirect } from "next/navigation"
+import StatsCard from "@/components/stats-card"
 
 export default async function Page() {
 
@@ -21,41 +22,6 @@ export default async function Page() {
   if (!session) {
     redirect("/psicologos/login")
   }
-  // Sample data for the dashboard
-  const stats = [
-    {
-      title: "Pacientes Ativos",
-      value: "32",
-      change: "+2 este mês",
-      icon: Users,
-      color: "text-pink-600 dark:text-pink-400",
-      bgColor: "bg-pink-100 dark:bg-pink-900/50",
-    },
-    {
-      title: "Sessões Agendadas",
-      value: "12",
-      change: "Próximos 7 dias",
-      icon: Calendar,
-      color: "text-pink-600 dark:text-pink-400",
-      bgColor: "bg-pink-100 dark:bg-pink-900/50",
-    },
-    {
-      title: "Relatórios Pendentes",
-      value: "5",
-      change: "3 com prazo próximo",
-      icon: FileText,
-      color: "text-pink-600 dark:text-pink-400",
-      bgColor: "bg-pink-100 dark:bg-pink-900/50",
-    },
-    {
-      title: "Horas Trabalhadas",
-      value: "24h",
-      change: "Esta semana",
-      icon: Clock,
-      color: "text-pink-600 dark:text-pink-400",
-      bgColor: "bg-pink-100 dark:bg-pink-900/50",
-    },
-  ]
 
   const upcomingAppointments = [
     {
@@ -152,78 +118,9 @@ export default async function Page() {
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 bg-gradient-to-b from-slate-50 to-pink-50 dark:from-pink-950 dark:to-pink-900 min-h-screen">
           {/* Welcome Section */}
-          <div className="flex flex-col md:flex-row gap-4 items-start">
-            <Card className="w-full md:w-2/3 bg-white dark:bg-pink-900/50 border-pink-100 dark:border-pink-800">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-2xl font-bold text-pink-900 dark:text-pink-100">
-                Bem-vindo ao MindFlow, {session?.user?.name ? `${session.user.name}` : "Usuário"}
-                </CardTitle>
-                <CardDescription className="text-gray-600 dark:text-gray-300">
-                  Aqui está um resumo da sua agenda e atividades recentes
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {stats.map((stat, index) => (
-                    <div
-                      key={index}
-                      className="flex flex-col p-4 rounded-lg border border-pink-100 dark:border-pink-800 bg-white dark:bg-pink-950/50"
-                    >
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className={`p-2 rounded-md ${stat.bgColor}`}>
-                          <stat.icon className={`h-5 w-5 ${stat.color}`} />
-                        </div>
-                        <span className="text-sm font-medium text-gray-600 dark:text-gray-400">{stat.title}</span>
-                      </div>
-                      <div className="flex items-end justify-between">
-                        <span className="text-2xl font-bold text-pink-900 dark:text-pink-100">{stat.value}</span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">{stat.change}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
 
-            <Card className="w-full md:w-1/3 bg-gradient-to-br from-blue-600 to-pink-800 text-white border-none">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg font-medium text-white flex items-center gap-2">
-                  <BrainCircuit className="h-5 w-5" />
-                  Assistente IA
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <p className="text-pink-100 text-sm">
-                    Baseado nos seus pacientes recentes, aqui estão algumas sugestões:
-                  </p>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start gap-2">
-                      <div className="rounded-full bg-pink-500/20 p-1 mt-0.5">
-                        <CheckCircle2 className="h-3 w-3" />
-                      </div>
-                      <span>3 pacientes precisam de atualização de prontuário</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="rounded-full bg-pink-500/20 p-1 mt-0.5">
-                        <CheckCircle2 className="h-3 w-3" />
-                      </div>
-                      <span>Novo artigo sobre Terapia Cognitivo-Comportamental disponível</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="rounded-full bg-pink-500/20 p-1 mt-0.5">
-                        <CheckCircle2 className="h-3 w-3" />
-                      </div>
-                      <span>Lembrete: Conferência online amanhã às 19h</span>
-                    </li>
-                  </ul>
-                  <button className="w-full mt-2 bg-white/10 hover:bg-white/20 text-white rounded-md py-1.5 text-sm font-medium transition-colors">
-                    Ver todas as sugestões
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <StatsCard/>
+
 
           {/* Appointments and Activity Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
