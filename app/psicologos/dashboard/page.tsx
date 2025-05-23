@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/ui/app-sidebar"
+import { AppSidebar } from "@/components/ui/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,21 +6,41 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Calendar, Clock, FileText, Users, TrendingUp, BrainCircuit, CheckCircle2, AlertCircle } from "lucide-react"
-import { auth } from "@/auth"
- import { redirect } from "next/navigation"
-import StatsCard from "@/components/stats-card"
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Calendar,
+  Clock,
+  FileText,
+  Users,
+  TrendingUp,
+  BrainCircuit,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+import StatsCard from "@/app/psicologos/dashboard/components/stats-card";
+import PatientsForMonth from "./components/patients-for-month";
+import { PatientOverview } from "./components/patient-overview";
 
 export default async function Page() {
-
-  const session = await auth()
+  const session = await auth();
   if (!session) {
-    redirect("/psicologos/login")
+    redirect("/psicologos/login");
   }
 
   const upcomingAppointments = [
@@ -59,7 +79,7 @@ export default async function Page() {
       status: "confirmado",
       avatar: "/placeholder.svg?height=40&width=40",
     },
-  ]
+  ];
 
   const recentActivities = [
     {
@@ -74,7 +94,8 @@ export default async function Page() {
       patient: "Pedro Almeida",
       time: "Há 4 horas",
       icon: CheckCircle2,
-      color: "text-green-600 bg-green-100 dark:text-green-400 dark:bg-green-900/50",
+      color:
+        "text-green-600 bg-green-100 dark:text-green-400 dark:bg-green-900/50",
     },
     {
       type: "Novo Agendamento",
@@ -90,7 +111,7 @@ export default async function Page() {
       icon: AlertCircle,
       color: "text-red-600 bg-red-100 dark:text-red-400 dark:bg-red-900/50",
     },
-  ]
+  ];
 
   return (
     <SidebarProvider>
@@ -98,7 +119,10 @@ export default async function Page() {
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b border-pink-100 dark:border-pink-800 px-4 bg-white dark:bg-pink-950/50">
           <SidebarTrigger className="-ml-1 text-gray-600 hover:text-pink-600 dark:text-gray-400 dark:hover:text-pink-400" />
-          <Separator orientation="vertical" className="mr-2 h-4 bg-pink-200 dark:bg-pink-700" />
+          <Separator
+            orientation="vertical"
+            className="mr-2 h-4 bg-pink-200 dark:bg-pink-700"
+          />
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem className="hidden md:block">
@@ -111,154 +135,20 @@ export default async function Page() {
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block text-pink-300 dark:text-pink-600" />
               <BreadcrumbItem>
-                <BreadcrumbPage className="text-gray-800 dark:text-gray-200">Visão Geral</BreadcrumbPage>
+                <BreadcrumbPage className="text-gray-800 dark:text-gray-200">
+                  Visão Geral
+                </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 bg-gradient-to-b from-slate-50 to-pink-50 dark:from-pink-950 dark:to-pink-900 min-h-screen">
-          {/* Welcome Section */}
+          <StatsCard />
+          <PatientsForMonth />
+          <PatientOverview/>
 
-          <StatsCard/>
-
-
-          {/* Appointments and Activity Section */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Upcoming Appointments */}
-            <Card className="md:col-span-2 bg-white dark:bg-pink-900/50 border-pink-100 dark:border-pink-800">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl font-bold text-pink-900 dark:text-pink-100 flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-pink-600 dark:text-pink-400" />
-                  Próximas Sessões
-                </CardTitle>
-                <CardDescription className="text-gray-600 dark:text-gray-300">
-                  Seus agendamentos para os próximos dias
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {upcomingAppointments.map((appointment, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between p-3 rounded-lg border border-pink-100 dark:border-pink-800 hover:bg-pink-50 dark:hover:bg-pink-800/50 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Avatar>
-                          <AvatarImage src={appointment.avatar} alt={appointment.patient} />
-                          <AvatarFallback className="bg-pink-200 text-pink-800 dark:bg-pink-800 dark:text-pink-200">
-                            {appointment.patient
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <div className="font-medium text-pink-900 dark:text-pink-100">{appointment.patient}</div>
-                          <div className="text-sm text-gray-600 dark:text-gray-400">{appointment.type}</div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-end">
-                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{appointment.time}</div>
-                        <div
-                          className={`text-xs px-2 py-0.5 rounded-full ${
-                            appointment.status === "confirmado"
-                              ? "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300"
-                              : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300"
-                          }`}
-                        >
-                          {appointment.status === "confirmado" ? "Confirmado" : "Pendente"}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  <button className="w-full mt-2 bg-pink-50 hover:bg-pink-100 dark:bg-pink-800/50 dark:hover:bg-pink-800 text-pink-600 dark:text-pink-300 rounded-md py-2 text-sm font-medium transition-colors">
-                    Ver todos os agendamentos
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Recent Activity */}
-            <Card className="bg-white dark:bg-pink-900/50 border-pink-100 dark:border-pink-800">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl font-bold text-pink-900 dark:text-pink-100 flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-pink-600 dark:text-pink-400" />
-                  Atividades Recentes
-                </CardTitle>
-                <CardDescription className="text-gray-600 dark:text-gray-300">Últimas ações realizadas</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {recentActivities.map((activity, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-3 p-3 rounded-lg border border-pink-100 dark:border-pink-800 hover:bg-pink-50 dark:hover:bg-pink-800/50 transition-colors"
-                    >
-                      <div className={`p-2 rounded-md ${activity.color}`}>
-                        <activity.icon className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-pink-900 dark:text-pink-100">{activity.type}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">{activity.patient}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">{activity.time}</div>
-                      </div>
-                    </div>
-                  ))}
-                  <button className="w-full mt-2 bg-pink-50 hover:bg-pink-100 dark:bg-pink-800/50 dark:hover:bg-pink-800 text-pink-600 dark:text-pink-300 rounded-md py-2 text-sm font-medium transition-colors">
-                    Ver todas as atividades
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Patient Overview */}
-          <Card className="bg-white dark:bg-pink-900/50 border-pink-100 dark:border-pink-800">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xl font-bold text-pink-900 dark:text-pink-100 flex items-center gap-2">
-                <Users className="h-5 w-5 text-pink-600 dark:text-pink-400" />
-                Visão Geral dos Pacientes
-              </CardTitle>
-              <CardDescription className="text-gray-600 dark:text-gray-300">
-                Distribuição e estatísticas dos seus pacientes
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="col-span-2 h-64 rounded-lg border border-pink-100 dark:border-pink-800 bg-pink-50/50 dark:bg-pink-950/50 flex items-center justify-center">
-                  <div className="text-center text-gray-500 dark:text-gray-400">
-                    <FileText className="h-10 w-10 mx-auto mb-2 opacity-50" />
-                    <p>Gráfico de distribuição de pacientes por idade e gênero</p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div className="p-4 rounded-lg border border-pink-100 dark:border-pink-800 bg-white dark:bg-pink-950/50">
-                    <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Faixa Etária</div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-bold text-pink-900 dark:text-pink-100">18-35 anos</span>
-                      <span className="text-sm text-pink-600 dark:text-pink-400">65%</span>
-                    </div>
-                  </div>
-                  <div className="p-4 rounded-lg border border-pink-100 dark:border-pink-800 bg-white dark:bg-pink-950/50">
-                    <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Gênero</div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-bold text-pink-900 dark:text-pink-100">Feminino</span>
-                      <span className="text-sm text-pink-600 dark:text-pink-400">58%</span>
-                    </div>
-                  </div>
-                  <div className="p-4 rounded-lg border border-pink-100 dark:border-pink-800 bg-white dark:bg-pink-950/50">
-                    <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Novos Pacientes</div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-bold text-pink-900 dark:text-pink-100">5 pacientes</span>
-                      <span className="text-sm text-green-600 dark:text-green-400">+12%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

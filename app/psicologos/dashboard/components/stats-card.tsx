@@ -128,7 +128,7 @@ export default async function DoctorHeader() {
     }).format(currentDate)
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div>
             {/* Blue Header Banner */}
             <div className="relative bg-blue-600 text-white overflow-hidden h-[220px] border-4 border-white rounded-xl">
                 <div className="absolute inset-0 overflow-hidden">
@@ -175,11 +175,11 @@ export default async function DoctorHeader() {
                     </div>
 
                     {/* Doctor illustration - better positioned */}
-                    <div className="absolute right-20 top-0 h-full flex items-center justify-end">
+                    <div className="absolute right-24 top-0 h-full flex items-center justify-end">
                         <Image
                             src={Psy || "/placeholder.svg"}
                             alt="Doctor illustration"
-                            width={200}
+                            width={220}
                             height={200}
                             className="object-contain"
                             priority
@@ -308,81 +308,7 @@ export default async function DoctorHeader() {
                             </div>
                         </CardContent>
                     </Card>
-                </div>
-
-                {/* Upcoming Appointments */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
-                    <Card className="col-span-1 lg:col-span-2 bg-white dark:bg-slate-800 border-none shadow-md">
-                        <CardHeader className="pb-2">
-                            <CardTitle className="text-xl font-bold text-gray-800 dark:text-gray-100">
-                                Próximos Agendamentos
-                            </CardTitle>
-                            <CardDescription className="text-gray-600 dark:text-gray-300">
-                                Consultas agendadas para os próximos dias
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-4">
-                                {upcomingAppointments.map((appointment, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex items-center justify-between p-3 rounded-lg border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
-                                    >
-                                        <div className="flex items-center gap-3">
-                                            <Avatar>
-                                                <AvatarImage src={appointment.avatar || "/placeholder.svg"} alt={appointment.patient} />
-                                                <AvatarFallback className="bg-blue-100 text-blue-700">
-                                                    {appointment.patient
-                                                        .split(" ")
-                                                        .map((n) => n[0])
-                                                        .join("")}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <div>
-                                                <p className="font-medium text-gray-800 dark:text-gray-100">{appointment.patient}</p>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">{appointment.type}</p>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-4">
-                                            <div className="text-right">
-                                                <p className="text-sm font-medium text-gray-800 dark:text-gray-100">{appointment.time}</p>
-                                                <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{appointment.status}</p>
-                                            </div>
-                                            <MoreHorizontal className="h-5 w-5 text-gray-400 dark:text-gray-500 cursor-pointer" />
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    {/* Recent Activities */}
-                    <Card className="bg-white dark:bg-slate-800 border-none shadow-md">
-                        <CardHeader className="pb-2">
-                            <CardTitle className="text-xl font-bold text-gray-800 dark:text-gray-100">Atividades Recentes</CardTitle>
-                            <CardDescription className="text-gray-600 dark:text-gray-300">
-                                Atualizações feitas recentemente
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-4">
-                                {recentActivities.map((activity, index) => (
-                                    <div key={index} className="flex items-center gap-3">
-                                        <div className={`p-2 rounded-full ${activity.color}`}>
-                                            <activity.icon className="h-5 w-5" />
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-800 dark:text-gray-100">{activity.type}</p>
-                                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                {activity.patient} - {activity.time}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
+                </div>               
             </div>
         </div>
     )
