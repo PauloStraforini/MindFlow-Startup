@@ -369,10 +369,6 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <button className="mt-8 bg-gradient-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-pink-200 transform hover:-translate-y-1 flex items-center">
-                  Conheça todos os recursos
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </button>
               </div>
             </div>
           </div>
@@ -696,13 +692,6 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-
-                <Link href="psicologos/cadastro">
-                  <button className="bg-gradient-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-600 text-white font-bold py-3.5 px-8 rounded-full text-lg transition-all duration-300 hover:shadow-lg hover:shadow-pink-400/30 transform hover:-translate-y-1 flex items-center group">
-                    Comece sua jornada
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </button>
-                </Link>
               </div>
 
               <div className="relative">
