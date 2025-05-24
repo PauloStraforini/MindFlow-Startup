@@ -18,7 +18,6 @@ import {
   Instagram,
   Facebook,
   Twitter,
-  Menu,
   X,
   ArrowRight,
   Brain,
@@ -29,16 +28,12 @@ import {
   Book,
 } from "lucide-react";
 
-import User1 from "@/components/images/user_1.jpg";
 import User2 from "@/components/images/user_2.jpg";
 import User3 from "@/components/images/user_3.jpg";
 import User4 from "@/components/images/user_4.jpg";
-
-import Apoio from "@/components/images/Psychologist-amico.svg";
-import Logo from "@/components/images/Logo1.png";
 import Chat from "@/components/images/ChatGPT Image 4 de abr. de 2025, 11_26_40.png";
 import Psico from "@/components/images/ChatGPT Image 4 de abr. de 2025, 10_50_38.png";
-import Header from "@/components/header";
+import Hero from "@/components/hero";
 // import useMercadoPago from "@/hooks/useMercadoPago";
 
 export default function Home() {
@@ -92,120 +87,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-purple-50 text-gray-800 overflow-x-hidden">
-      {/* Header */}
-      <Header />
-
       <main>
         {/* Hero Section */}
-        <section
-          id="inicio"
-          className="pt-24 pb-20 bg-gradient-to-r from-pink-400 via-pink-300 to-purple-300 text-white overflow-hidden relative"
-        >
-          {/* Background Elements */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-            <div className="absolute top-10 left-10 w-64 h-64 rounded-full bg-teal-400/20 blur-3xl animate-pulse"></div>
-            <div
-              className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-purple-300/20 blur-3xl animate-pulse"
-              style={{ animationDelay: "1s" }}
-            ></div>
-            <div
-              className="absolute top-1/2 left-1/3 w-40 h-40 rounded-full bg-pink-300/20 blur-3xl animate-pulse"
-              style={{ animationDelay: "2s" }}
-            ></div>
-
-            {/* Grid pattern */}
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMTIxMjEiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptNiA2djZoNnYtNmgtNnptLTEyIDBoNnY2aC02di02em0xMiAwaDZ2NmgtNnYtNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
-          </div>
-
-          <div className="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
-            <div className="md:w-1/2 mb-12 md:mb-0 animate-fadeIn">
-              <div className="inline-block px-3 py-1 bg-blue-600/60 rounded-full text-white font-medium text-sm mb-6 border border-pink-400/50 backdrop-blur-sm">
-                <span className="flex items-center">
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Plataforma para Psicólogos
-                </span>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                <span className="block">Transforme sua</span>
-                <span className="bg-gradient-to-r from-teal-200 to-purple-200 bg-clip-text text-transparent">
-                  prática clínica
-                </span>
-              </h1>
-              <p className="text-xl mb-8 text-pink-100 max-w-lg leading-relaxed">
-                Organize sessões, gerencie pacientes e otimize seu tempo com
-                nossa plataforma especializada para psicólogos.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="psicologos/login">
-                  <button className="bg-gradient-to-r from-blue-400 to-pink-400 hover:from-blue-600 hover:to-pink-500 text-white font-bold py-3.5 px-8 rounded-full text-lg transition-all duration-300 hover:shadow-lg hover:shadow-pink-400/30 transform hover:-translate-y-1 flex items-center justify-center group">
-                    Comece Agora
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </button>
-                </Link>
-                <button className="border border-pink-300/50 hover:border-pink-300 text-white font-medium py-3.5 px-8 rounded-full text-lg transition-all duration-300 hover:bg-pink-500/30 backdrop-blur-sm">
-                  Saiba Mais
-                </button>
-              </div>
-
-              <div className="mt-10 flex items-center gap-4">
-                <div className="flex -space-x-3">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div
-                      key={i}
-                      className="w-10 h-10 rounded-full border-2 border-pink-400 overflow-hidden ring-2 ring-pink-300 shadow-lg"
-                    >
-                      <Image
-                        src={User1 || "/placeholder.svg"}
-                        alt="Ilustração de usuario"
-                        width={40}
-                        height={40}
-                        className="object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className="text-sm text-pink-100">
-                  <span className="font-bold text-pink-200 text-end">500+</span>{" "}
-                  psicólogos já utilizam
-                </div>
-              </div>
-            </div>
-            <div className="md:w-1/2 relative animate-float">
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-300/20 to-purple-300/20 rounded-2xl blur-3xl transform -rotate-6"></div>
-              <div className="relative bg-gradient-to-r from-pink-400/50 to-pink-300/50 p-2 rounded-2xl backdrop-blur-sm border border-pink-300/30 shadow-2xl flex justify-center items-center transform transition-transform duration-500 hover:scale-105 hover:rotate-2">
-                <Image
-                  src={Apoio || "/placeholder.svg"}
-                  alt="Ilustração de psicologia"
-                  width={600}
-                  height={400}
-                  className="rounded-xl shadow-inner"
-                />
-              </div>
-              <div className="absolute -bottom-6 -right-6 bg-gradient-to-r bg-blue-600/60  text-white rounded-2xl p-4 shadow-xl transform rotate-3 z-20 border border-pink-200 backdrop-blur-sm">
-                <div className="flex items-center gap-3">
-                  <Heart className="h-8 w-8 text-white" />
-                  <div>
-                    <div className="text-xs text-white/80">Satisfação</div>
-                    <div className="text-lg font-bold text-white">98%</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating elements */}
-              <div className="absolute -top-8 -left-8 bg-white rounded-2xl p-3 shadow-xl transform -rotate-3 z-20 border border-pink-100">
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-6 w-6 text-pink-500" />
-                  <div>
-                    <div className="text-xs text-gray-500">Agendamentos</div>
-                    <div className="text-sm font-bold text-pink-700">
-                      Simplificados
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <Hero />
 
         {/* Features */}
         <section id="funcionalidades" className="py-24 bg-white relative">
