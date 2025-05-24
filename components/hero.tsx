@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Sparkles, ArrowRight, Heart, Calendar, Brain, Users, Clock, HeartCrack, HeartIcon, Hand } from "lucide-react"
+import { Sparkles, ArrowRight, Heart, Calendar, Brain, Users, Clock, HeartCrack, HeartIcon, Hand, BrainIcon } from "lucide-react"
 
 const Hero = () => {
   return (
@@ -68,13 +68,13 @@ const Hero = () => {
           {/* Floating Icons */}
           <div className="relative size-96">
             {/* Central Brain Icon */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-blue-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-blue-400/30 animate-pulse">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 size-20 bg-blue-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-blue-400/30 animate-pulse">
               <Brain className="h-10 w-10 text-blue-600" />
             </div>
 
             {/* Floating Calendar */}
             <div
-              className="absolute top-8 right-8 w-16 h-16 bg-pink-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-pink-400/30 animate-float"
+              className="absolute top-8 right-8 size-16 bg-pink-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-pink-400/30 animate-float"
               style={{ animationDelay: "0.5s" }}
             >
               <Calendar className="h-8 w-8 text-pink-400" />
@@ -82,7 +82,7 @@ const Hero = () => {
 
             {/* Floating Users */}
             <div
-              className="absolute bottom-12 left-4 w-16 h-16 bg-purple-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-purple-400/30 animate-float"
+              className="absolute bottom-12 size-16 bg-purple-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-purple-400/30 animate-float"
               style={{ animationDelay: "1s" }}
             >
               <Users className="h-8 w-8 text-purple-400" />
@@ -90,7 +90,7 @@ const Hero = () => {
 
             {/* Floating Heart */}
             <div
-              className="absolute top-16 left-12 w-14 h-14 bg-red-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-red-400/30 animate-float"
+              className="absolute top-32 left-2 size-16 bg-red-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-red-400/30 animate-float"
               style={{ animationDelay: "1.5s" }}
             >
               <Heart className="h-7 w-7 text-red-400" />
@@ -98,11 +98,20 @@ const Hero = () => {
 
             {/* Floating Clock */}
             <div
-              className="absolute bottom-8 right-16 w-14 h-14 bg-green-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-green-400/30 animate-float"
+              className="absolute bottom-8 right-1 size-16 bg-green-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-green-400/30 animate-float"
               style={{ animationDelay: "2s" }}
             >
               <Clock className="h-7 w-7 text-green-400" />
             </div>
+
+            {/* Floating Mind */}
+            <div
+              className="absolute bottom-20 right-56 top-5 size-16 bg-yellow-400/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-yellow-300/30 animate-float"
+              style={{ animationDelay: "2s" }}
+            >
+              <BrainIcon className="h-7 w-7 text-yellow-400" />
+            </div>
+
 
             {/* Additional decorative elements */}
             <div
