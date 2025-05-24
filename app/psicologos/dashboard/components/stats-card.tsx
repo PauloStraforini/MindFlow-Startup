@@ -190,7 +190,7 @@ export default async function DoctorHeader() {
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col justify-center pl-10">
                     <div className="flex items-center gap-4 mb-2">
-                        <Avatar className="h-14 w-14 border-2 border-white shadow-lg">
+                        <Avatar className="size-24 border-2 border-white shadow-lg">
                             <AvatarImage src={session?.user?.image || "/placeholder.svg"} alt={session?.user?.name || "Usuário"} />
                             <AvatarFallback className="bg-pink-200 text-pink-700 text-xl">
                                 {session?.user?.name

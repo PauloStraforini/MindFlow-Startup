@@ -77,7 +77,7 @@ const data = {
       items: [
         {
           title: "Calendário",
-          url: "/psicologos/consultations",
+          url: "/psicologos/calendario",
           isActive: false,
         },
       ],
@@ -89,7 +89,7 @@ const data = {
       items: [
         {
           title: "Relatórios Financeiros",
-          url: "/psicologos/paymants",
+          url: "/psicologos/relatorio-financeiros",
           isActive: false,
         },
       ],
