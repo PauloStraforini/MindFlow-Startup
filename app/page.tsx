@@ -1,38 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import {
-  Calendar,
-  FileText,
-  Video,
-  BookOpen,
   Shield,
-  Clock,
   Lock,
-  Smile,
-  Headphones,
-  Check,
   Linkedin,
   Instagram,
   Facebook,
   Twitter,
-  X,
-  ArrowRight,
   Brain,
-  Heart,
-  Star,
-  Sparkles,
   ChevronRight,
-  Book,
 } from "lucide-react";
 
-import User2 from "@/components/images/user_2.jpg";
-import User3 from "@/components/images/user_3.jpg";
-import User4 from "@/components/images/user_4.jpg";
-import Chat from "@/components/images/ChatGPT Image 4 de abr. de 2025, 11_26_40.png";
-import Psico from "@/components/images/ChatGPT Image 4 de abr. de 2025, 10_50_38.png";
 import Hero from "@/components/hero";
 import Features from "@/components/features";
 import Header from "@/components/header";
@@ -120,7 +100,6 @@ export default function Home() {
 
         {/* Pricing */}
         <PricingSection />
-
 
         {/* Call to Action */}
         <CallToActionSection />

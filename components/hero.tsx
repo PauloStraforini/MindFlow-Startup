@@ -82,7 +82,7 @@ const Hero = () => {
 
             {/* Floating Users */}
             <div
-              className="absolute bottom-12 size-16 bg-purple-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-purple-400/30 animate-float"
+              className="absolute bottom-12 top-80 left-35 size-16 bg-purple-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-purple-400/30 animate-float"
               style={{ animationDelay: "1s" }}
             >
               <Users className="h-8 w-8 text-purple-400" />
@@ -90,7 +90,7 @@ const Hero = () => {
 
             {/* Floating Heart */}
             <div
-              className="absolute top-32 left-2 size-16 bg-red-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-red-400/30 animate-float"
+              className="absolute top-40 left-2 size-16 bg-red-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-red-400/30 animate-float"
               style={{ animationDelay: "1.5s" }}
             >
               <Heart className="h-7 w-7 text-red-400" />
@@ -98,7 +98,7 @@ const Hero = () => {
 
             {/* Floating Clock */}
             <div
-              className="absolute bottom-8 right-1 size-16 bg-green-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-green-400/30 animate-float"
+              className="absolute bottom-8 right-1 top-46 size-16 bg-green-600/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-green-400/30 animate-float"
               style={{ animationDelay: "2s" }}
             >
               <Clock className="h-7 w-7 text-green-400" />

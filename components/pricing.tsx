@@ -1,189 +1,186 @@
-import { Sparkles, Check } from "lucide-react";
+"use client"
 
-type Plan = {
-  name: string;
-  price: string;
-  period: string;
-  features: string[];
-  color: string;
-  buttonColor: string;
-  bgColor: string;
-  shadowColor: string;
-  popular?: boolean;
-};
+import type React from "react"
+import { Sparkles, Check, ArrowRight } from "lucide-react"
 
-const Plans: Plan[] = [
-  {
-    name: "Básico",
-    price: "R$ 199",
-    period: "/mês",
-    features: [
-      "Agendamento de sessões",
-      "Prontuários eletrônicos básicos",
-      "Relatórios mensais",
-      "Suporte por email",
-      "Até 20 pacientes",
-    ],
-    color: "border-sky-600 hover:border-sky-400",
-    buttonColor: "bg-sky-600 hover:bg-sky-700",
-    bgColor: "bg-sky-900/70",
-    shadowColor: "hover:shadow-sky-600/50",
-  },
-  {
-    name: "Profissional",
-    price: "R$ 299",
-    period: "/mês",
-    features: [
-      "Tudo do plano Básico",
-      "Integração com videoconferência",
-      "Relatórios semanais personalizados",
-      "Recursos terapêuticos avançados",
-      "Suporte prioritário",
-      "Até 50 pacientes",
-    ],
-    popular: true,
-    color: "border-purple-600 hover:border-purple-400",
-    buttonColor:
-      "bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800",
-    bgColor: "bg-purple-900/70",
-    shadowColor: "hover:shadow-purple-600/50",
-  },
-  {
-    name: "Premium",
-    price: "R$ 350",
-    period: "/mês",
-    features: [
-      "Tudo do plano Profissional",
-      "API personalizada",
-      "Treinamento exclusivo",
-      "Gerenciamento de múltiplos consultórios",
-      "Suporte 24/7",
-      "Pacientes ilimitados",
-    ],
-    color: "border-sky-600 hover:border-sky-400",
-    buttonColor: "bg-sky-600 hover:bg-sky-700",
-    bgColor: "bg-sky-900/70",
-    shadowColor: "hover:shadow-sky-600/50",
-  },
-];
+interface PlanProps {
+  name: string
+  price: string
+  period: string
+  features: string[]
+  delay?: string
+}
 
-type FAQ = {
-  question: string;
-  answer: string;
-};
-
-const faqs: FAQ[] = [
-  {
-    question: "Posso cancelar minha assinatura a qualquer momento?",
-    answer:
-      "Sim, você pode cancelar sua assinatura a qualquer momento sem taxas adicionais. Você continuará tendo acesso até o final do período pago.",
-  },
-  {
-    question: "Como funciona o período de teste gratuito?",
-    answer:
-      "Oferecemos 7 dias de teste gratuito em todos os planos. Você só será cobrado após esse período se decidir continuar usando nossa plataforma.",
-  },
-  {
-    question: "A plataforma é segura para dados sensíveis de pacientes?",
-    answer:
-      "Sim, utilizamos criptografia de ponta a ponta e seguimos todas as normas da LGPD e do CFP para garantir a segurança e privacidade dos dados.",
-  },
-];
-
-function Pricing({ plan }: { plan: Plan }) {
-  return (
-    <div
-      className={`${plan.bgColor} p-8 rounded-2xl shadow-xl border-2 ${plan.color} ${plan.shadowColor} transition-all duration-500 transform hover:scale-105 relative group`}
-    >
-      {plan.popular && (
-        <div className="absolute -top-5 left-0 right-0 mx-auto w-max">
-          <span className="bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm font-semibold px-6 py-2 rounded-full uppercase inline-block shadow-lg">
-            Mais Escolhido
-          </span>
-        </div>
-      )}
-
-      <div className={`${plan.popular ? "pt-4" : ""}`}>
-        <h3 className="text-2xl font-semibold mb-4 text-white tracking-wide">
-          {plan.name}
-        </h3>
-        <p className="text-3xl font-bold mb-2 text-white">
-          {plan.price}
-          <span className="text-lg text-sky-300 font-normal">{plan.period}</span>
-        </p>
-        <p className="text-sky-300 mb-8">Cancele a qualquer momento</p>
-
-        <ul className="mb-8 space-y-4">
-          {plan.features.map((feature, idx) => (
-            <li key={idx} className="flex items-start">
-              <div className="bg-green-100 rounded-full p-1 mr-3 mt-0.5">
-                <Check className="w-4 h-4 text-green-600" />
-              </div>
-              <span className="text-sky-200">{feature}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* Botão comentado para você adaptar */}
-        {/* <button
-          className={`${plan.buttonColor} text-white py-2 px-4 rounded-full transition-transform duration-300 ease-in-out hover:scale-105 shadow-md`}
-        >
-          Escolher Plano
-        </button> */}
+const PlanCard: React.FC<PlanProps> = ({ name, price, period, features, delay = "0s" }) => (
+  <div
+    className="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-500 animate-float"
+    style={{ animationDelay: delay }}
+  >
+    <div className="mb-6">
+      <h3 className="text-2xl font-bold text-white mb-2">{name}</h3>
+      <div className="flex items-baseline gap-2">
+        <span className="text-4xl font-bold text-white">{price}</span>
+        {period && <span className="text-lg text-gray-300">{period}</span>}
       </div>
     </div>
-  );
-}
 
-function FAQItem({ faq }: { faq: FAQ }) {
-  return (
-    <div className="bg-purple-900/70 p-6 rounded-xl shadow-lg border border-purple-700 hover:border-purple-600 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-      <h4 className="text-lg font-semibold mb-3 text-white">{faq.question}</h4>
-      <p className="text-sky-300 leading-relaxed">{faq.answer}</p>
-    </div>
-  );
-}
+    <ul className="space-y-4 mb-8">
+      {features.map((feature, idx) => (
+        <li key={idx} className="flex items-start group">
+          <div className="bg-blue-500/20 backdrop-blur-sm rounded-full p-1 mr-3 mt-1 border border-blue-400/30 group-hover:bg-blue-400/30 transition-all duration-300">
+            <Check className="w-3 h-3 text-blue-400" />
+          </div>
+          <span className="text-gray-300 group-hover:text-gray-200 transition-colors">{feature}</span>
+        </li>
+      ))}
+    </ul>
 
-export default function PricingSection() {
+    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 transform hover:-translate-y-1 flex items-center justify-center group">
+      Escolher Plano
+      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+    </button>
+  </div>
+)
+
+const PricingSection: React.FC = () => {
+  const plans = [
+    {
+      name: "Básico",
+      price: "R$ 199",
+      period: "/mês",
+      features: [
+        "Agendamento de sessões",
+        "Prontuários eletrônicos básicos",
+        "Relatórios mensais",
+        "Suporte por email",
+        "Até 20 pacientes",
+      ],
+      delay: "0.2s",
+    },
+    {
+      name: "Profissional",
+      price: "R$ 299",
+      period: "/mês",
+      features: [
+        "Tudo do plano Básico",
+        "Integração com videoconferência",
+        "Relatórios semanais personalizados",
+        "Recursos terapêuticos avançados",
+        "Suporte prioritário",
+        "Até 50 pacientes",
+      ],
+      delay: "0.4s",
+    },
+  ]
+
   return (
-    <section id="precos" className="relative py-24">
+    <section className="py-24 relative overflow-hidden bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
+      {/* Decorative SVG */}
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: "url('/image.svg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      ></div>
+
+      {/* Grid pattern overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-sky-800 to-purple-800"></div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-block px-3 py-1 bg-sky-900/30 rounded-full text-sky-300 font-medium text-sm mb-4">
-            <span className="flex items-center justify-center">
-              <Sparkles className="h-4 w-4 mr-2 text-sky-300" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
+          {/* Left Content */}
+          <div className="animate-fadeIn">
+            <div className="inline-flex items-center px-4 py-2 bg-blue-600/80 rounded-full text-white font-medium text-sm mb-8 backdrop-blur-sm border border-blue-500/30">
+              <Sparkles className="h-4 w-4 mr-2" />
               Preços
-            </span>
+            </div>
+
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white leading-tight">
+              Planos que cabem no seu bolso
+            </h2>
+
+            <p className="text-xl text-gray-300 mb-12 leading-relaxed">
+              Escolha o plano ideal para o seu perfil profissional e comece a transformar sua prática hoje mesmo.
+            </p>
+
+            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 transform hover:-translate-y-1 flex items-center group mb-12">
+              Ver Todos os Planos
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </button>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            Planos que cabem no seu bolso
-          </h2>
-          <p className="text-lg text-sky-200">
-            Escolha o plano ideal para o seu perfil profissional e comece a
-            transformar sua prática.
-          </p>
+
+          {/* Right Content - Plans */}
+          <div className="relative">
+            <div className="space-y-6">
+              {plans.map((plan, idx) => (
+                <PlanCard
+                  key={idx}
+                  name={plan.name}
+                  price={plan.price}
+                  period={plan.period}
+                  features={plan.features}
+                  delay={plan.delay}
+                />
+              ))}
+            </div>
+
+            {/* Floating decorative elements */}
+            <div className="absolute -top-4 -right-4 w-20 h-20 bg-blue-500/20 rounded-2xl backdrop-blur-sm border border-blue-400/30 flex items-center justify-center animate-float">
+              <Sparkles className="w-8 h-8 text-blue-400" />
+            </div>
+            <div
+              className="absolute -bottom-4 -left-4 w-16 h-16 bg-purple-500/20 rounded-xl backdrop-blur-sm border border-purple-400/30 animate-float"
+              style={{ animationDelay: "1s" }}
+            ></div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {Plans.map((plan, idx) => (
-            <Pricing key={idx} plan={plan} />
-          ))}
-        </div>
-
-        {/* FAQ */}
-        <div className="mt-20 max-w-3xl mx-auto">
-          <h3 className="text-2xl font-bold mb-8 text-center text-white">
-            Perguntas Frequentes
-          </h3>
-          <div className="space-y-5">
-            {faqs.map((faq, idx) => (
-              <FAQItem key={idx} faq={faq} />
-            ))}
-          </div>
-        </div>
+        {/* Decorative floating elements */}
+        <div className="absolute top-20 left-10 w-3 h-3 bg-blue-400 rounded-full animate-ping opacity-60"></div>
+        <div
+          className="absolute bottom-20 right-20 w-2 h-2 bg-purple-400 rounded-full animate-ping opacity-60"
+          style={{ animationDelay: "1s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 right-10 w-4 h-4 bg-blue-400 rounded-full animate-ping opacity-60"
+          style={{ animationDelay: "2s" }}
+        ></div>
       </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 1s ease-out;
+        }
+
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+      `}</style>
     </section>
-  );
+  )
 }
+
+export default PricingSection
