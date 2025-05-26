@@ -9,9 +9,9 @@ import Works from "@/components/works";
 import Benefits from "@/components/benefits";
 import Testimonials from "@/components/testimonials";
 import Psychologists from "@/components/psychologists";
-import PricingSection from "@/components/pricing";
+import Princing from "@/components/pricing"
 import Footer from "@/components/footer";
-// import useMercadoPago from "@/hooks/useMercadoPago";
+
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -67,7 +67,7 @@ export default function Home() {
       <main>
 
         {/* Header Section */}
-        <Header/>
+        <Header />
 
         {/* Hero Section */}
         <Hero />
@@ -88,8 +88,7 @@ export default function Home() {
         <Psychologists />
 
         {/* Pricing */}
-        <PricingSection />
-          
+        <Princing />
       </main>
 
       {/* Footer */}
