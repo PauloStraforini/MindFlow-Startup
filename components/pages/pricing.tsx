@@ -3,7 +3,7 @@
 import type React from "react";
 import { Sparkles, Check, ArrowRight } from "lucide-react";
 
-import useMercadoPago from "../hooks/useMercadoPago";
+import useMercadoPago from "../../hooks/useMercadoPago";
 
 interface PlanProps {
   name: string;
@@ -41,7 +41,7 @@ const PlanCard: React.FC<PlanProps> = ({ name, price, period, features, delay = 
       </ul>
 
       <button
-        className="bg-blue-600 text-white py-2 px-4 rounded-full transition-transform duration-300 ease-in-out hover:scale-105 shadow-md"
+        className="bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 ease-in-out shadow-lg hover:from-blue-700 hover:to-blue-600 hover:shadow-xl hover:scale-105 flex items-center gap-2 group"
         onClick={() =>
           createMercadoPagoCheckout({
             testeId: "price_12345", // Substitua com o ID real do plano
@@ -49,9 +49,10 @@ const PlanCard: React.FC<PlanProps> = ({ name, price, period, features, delay = 
           })
         }
       >
-        Comprar
-        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+        <span className="text-sm sm:text-base">Comprar Agora</span>
+        <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
       </button>
+
     </div>
   );
 };
