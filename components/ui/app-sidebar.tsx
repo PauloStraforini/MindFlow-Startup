@@ -14,6 +14,7 @@ import {
   PieChart,
   ChevronDown,
   LogOut,
+  User,
 } from "lucide-react";
 
 import {
@@ -39,13 +40,14 @@ import {
 
 import { SingOut } from "@/components/actions/singOut";
 
+
 // This is sample data.
 const data = {
   navMain: [
     {
       title: "Dashboard",
       url: "/psicologos/dashboard",
-      icon: Calendar,
+      icon: PieChart,
       isActive: true,
     },
     {
@@ -53,11 +55,6 @@ const data = {
       url: "",
       icon: FileText,
       items: [
-        {
-          title: "Todos os Pacientes",
-          url: "/psicologos/todos-pacientes",
-          isActive: false,
-        },
         {
           title: "Cadastrar Paciente",
           url: "/psicologos/add-paciente",
@@ -163,45 +160,43 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     }));
   };
 
-
   return (
-    <Sidebar
-      className="border-r border-indigo-100 dark:border-rose-800"
-      {...props}
-    >
-      <SidebarHeader className="pb-0">
+    <Sidebar className="border-r border-gray-200 bg-white" {...props}>
+      <SidebarHeader className="border-b border-gray-100 bg-white p-6">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#" className="flex items-center">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-r from-rose-300 to-purple-500 text-white">
-                  <Brain className="size-4" />
+              <a
+                href="#"
+                className="flex items-center gap-3 hover:bg-transparent"
+              >
+                <div className="flex aspect-square size-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+                  <Brain className="size-6" />
                 </div>
-                <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="bg-gradient-to-r from-rose-600 to-purple-500 bg-clip-text text-transparent font-extrabold">
+                <div className="flex flex-col gap-1 leading-none">
+                  <span className="text-gray-900 font-bold text-xl">
                     MindFlow
-                  </span>
-                  <span className="text-gray-600 dark:text-gray-400">
-                    v1.0.0
                   </span>
                 </div>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <div className="px-2 pt-2">
+
+        <div className="mt-6">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
             <Input
               placeholder="Pesquisar..."
-              className="pl-9 h-9 bg-white dark:bg-indigo-950/50 border-indigo-100 dark:border-rose-800 focus-visible:ring-rose-600 dark:focus-visible:ring-indigo-400"
+              className="pl-10 h-11 bg-gray-50 border-gray-200 focus-visible:ring-blue-500 focus-visible:border-blue-500 rounded-xl"
             />
           </div>
         </div>
       </SidebarHeader>
-      <SidebarContent className="px-2">
+
+      <SidebarContent className="px-4 py-6 bg-white">
         <SidebarGroup>
-          <SidebarMenu>
+          <SidebarMenu className="space-y-2">
             {data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
                 {item.items?.length ? (
@@ -212,33 +207,43 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   >
                     <CollapsibleTrigger className="w-full">
                       <div
-                        className={`flex items-center w-full rounded-md p-2 text-left text-sm gap-2 text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-rose-400 ${
+                        className={`flex items-center w-full rounded-xl p-3 text-left text-sm gap-3 transition-all duration-200 group ${
                           item.isActive
-                            ? "bg-indigo-50 dark:bg-indigo-900/50 font-medium text-indigo-600 dark:text-indigo-400"
-                            : ""
+                            ? "bg-blue-50 text-blue-700 font-medium shadow-sm"
+                            : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
                         }`}
                       >
                         {item.icon && (
-                          <item.icon className="h-5 w-5 text-gray-500 dark:text-gray-400 group-hover:text-rose-600 dark:group-hover:text-indigo-400" />
+                          <item.icon
+                            className={`h-5 w-5 ${
+                              item.isActive
+                                ? "text-blue-600"
+                                : "text-gray-500 group-hover:text-gray-700"
+                            }`}
+                          />
                         )}
-                        <span className="flex-1">{item.title}</span>
+                        <span className="flex-1 font-medium">{item.title}</span>
                         <ChevronDown
                           className={`h-4 w-4 transition-transform ${
                             openItems[item.title] ? "rotate-180" : ""
+                          } ${
+                            item.isActive ? "text-blue-600" : "text-gray-400"
                           }`}
                         />
                       </div>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
-                      <SidebarMenuSub>
+                      <SidebarMenuSub className="ml-8 mt-2 space-y-1">
                         {item.items.map((subItem) => (
                           <SidebarMenuSubItem key={subItem.title}>
                             <SidebarMenuSubButton
                               asChild
                               isActive={subItem.isActive}
-                              className="text-gray-700 hover:text-purple-600 dark:text-gray-300 dark:hover:text-indigo-400 data-[active=true]:text-indigo-600 dark:data-[active=true]:text-indigo-400"
+                              className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-all duration-200 data-[active=true]:text-blue-700 data-[active=true]:bg-blue-50 data-[active=true]:font-medium"
                             >
-                              <a href={subItem.url}>{subItem.title}</a>
+                              <a href={subItem.url} className="py-2">
+                                {subItem.title}
+                              </a>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         ))}
@@ -249,13 +254,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <SidebarMenuButton
                     asChild
                     isActive={item.isActive}
-                    className="text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-rose-400 data-[active=true]:bg-indigo-50 dark:data-[active=true]:bg-indigo-900/50 data-[active=true]:text-indigo-600 dark:data-[active=true]:text-indigo-400"
+                    className="text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-xl transition-all duration-200 data-[active=true]:bg-blue-50 data-[active=true]:text-blue-700 data-[active=true]:font-medium data-[active=true]:shadow-sm p-3 group"
                   >
-                    <a href={item.url}>
+                    <a href={item.url} className="flex items-center gap-3">
                       {item.icon && (
-                        <item.icon className="h-5 w-5 text-gray-500 dark:text-gray-400 group-hover:text-rose-600 dark:group-hover:text-indigo-400" />
+                        <item.icon
+                          className={`h-5 w-5 ${
+                            item.isActive
+                              ? "text-blue-600"
+                              : "text-gray-500 group-hover:text-gray-700"
+                          }`}
+                        />
                       )}
-                      <span>{item.title}</span>
+                      <span className="font-medium">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 )}
@@ -264,38 +275,31 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <div className="p-3">
-            <div className="rounded-lg border border-indigo-100 dark:border-indigo-800 bg-white dark:bg-indigo-950/50 p-3 shadow-sm">
-            <div className="flex items-center gap-3">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-r from-red-500 to-red-600 text-white">
-              <LogOut className="size-4" />
-              </div>
-              <button
-              onClick={SingOut}
-              className="text-indigo-600 dark:text-red-400 hover:underline cursor-pointer"
-              >
-              <div className="text-sm font-medium text-indigo-900 dark:text-indigo-200">
-                Sair da Conta
-              </div>
-              </button>
-            </div>
-            </div>
 
-          <div className="rounded-lg border mt-3 border-indigo-100 dark:border-indigo-800 bg-white dark:bg-indigo-950/50 p-3 shadow-sm">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-r from-rose-300 to-pink-500 text-white">
-                <Shield className="size-4" />
-              </div>
-              <div className="text-sm font-medium text-indigo-900 dark:text-indigo-200">
-                Plano Profissional
-              </div>
+      <SidebarFooter className="border-t border-gray-100 bg-white p-4">
+        {/* Plan Info */}
+        <div className="rounded-xl bg-gray-50 p-4 mb-4 border border-gray-200">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-white">
+              <Shield className="size-4" />
             </div>
-            <div className="text-xs text-gray-600 dark:text-gray-400">
-              Sua assinatura renova em 15 dias
+            <div className="text-sm font-medium text-gray-900">
+              Plano Profissional
             </div>
           </div>
+          <div className="text-xs text-gray-600">Renovação em 15 dias</div>
         </div>
+
+        {/* Logout */}
+        <button
+          onClick={SingOut}
+          className="w-full flex items-center gap-3 p-3 rounded-xl text-gray-700 hover:bg-red-50 hover:text-red-700 transition-all duration-200 group"
+        >
+          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gray-200 group-hover:bg-red-100 text-gray-600 group-hover:text-red-600 transition-colors">
+            <LogOut className="size-4" />
+          </div>
+          <span className="text-sm font-medium">Sair da Conta</span>
+        </button>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
