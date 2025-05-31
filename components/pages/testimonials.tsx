@@ -95,6 +95,14 @@ export default function Testimonials() {
                         </div>
                     ))}
                 </div>
+                <div className="flex justify-center mt-12">
+                    <a
+                        href="/blog"
+                        className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-blue-500/30"
+                    >
+                        Veja Oque os Psicólogos Estão Dizendo
+                    </a>
+                </div>
             </div>
 
             {/* Floating decorative elements */}
