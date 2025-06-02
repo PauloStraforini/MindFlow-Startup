@@ -2,6 +2,8 @@
 
 import Image from "next/image"
 import { Sparkles, Heart, Shield, Calendar } from "lucide-react"
+import User1 from "@/components/images/primeiro-post.png";
+
 
 interface SectionPsicologosProps {
   Psico?: string
@@ -95,12 +97,12 @@ export default function SectionPsicologos({ Psico }: SectionPsicologosProps) {
           {/* Imagem */}
           <div className="relative group animate-fadeIn" style={{ animationDelay: "0.3s" }}>
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-3xl transform rotate-6 transition-transform duration-500 group-hover:rotate-3"></div>
-            <div className="relative rounded-3xl overflow-hidden bg-white/5 backdrop-blur-md p-4 border border-white/10 shadow-2xl transition-transform duration-500 hover:scale-[1.07] hover:rotate-1">
+            <div className="relative rounded-3xl overflow-hidden bg-white/5 backdrop-blur-md p-12 border border-white/10 shadow-2xl transition-transform duration-500 hover:scale-[1.07] hover:rotate-1">
               <Image
-                src={Psico || "/placeholder.svg"}
+                src={User1 || "/placeholder.svg"}
                 alt="Psicóloga usando o MindFlow"
-                width={600}
-                height={600}
+                width={500}
+                height={100}
                 className="rounded-2xl object-cover"
                 priority
               />
