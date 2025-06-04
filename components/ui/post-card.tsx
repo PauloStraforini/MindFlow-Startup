@@ -7,16 +7,30 @@ import { Calendar, User } from "lucide-react"
 const postImagePath = "/images/primeiro-post.jpg"
 const authorImagePath = "/images/customer-01.jpg"
 
-export const PostCard = () => {
+type Author = {
+  name: string
+  avatar: string
+}
+
+type PostCardProps = {
+  slug: string
+  title: string
+  description: string
+  date: string
+  image: string
+  author: Author
+}
+
+export const PostCard = ({ slug, title, description, date, image, author }: PostCardProps) => {
   return (
     <Link
-      href={`/blog/`}
+      href={`/blog/${slug}`}
       className="group w-full max-w-2xl rounded-2xl border border-gray-700/50 bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden transition-all duration-500 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50"
     >
       {/* Image Container */}
       <div className="relative w-full h-48 md:h-56 overflow-hidden">
         <Image
-          src={postImagePath || "/placeholder.svg"}
+          src={image}
           alt="Transformando sua mente em um campo fértil para novas ideias"
           fill
           sizes="(max-width: 768px) 100vw, 640px"
@@ -40,14 +54,12 @@ export const PostCard = () => {
       <div className="p-6 space-y-4">
         {/* Title */}
         <h2 className="text-xl md:text-2xl font-bold text-gray-100 line-clamp-2 group-hover:text-blue-300 transition-colors duration-300 leading-tight">
-          Transformando sua mente em um campo fértil para novas ideias
+          {title}
         </h2>
 
         {/* Description */}
         <p className="text-gray-400 text-sm md:text-base line-clamp-3 leading-relaxed">
-          Se você é um profissional que busca inovação e criatividade no seu trabalho, este post é para você. Vamos
-          explorar como cultivar uma mentalidade aberta e receptiva a novas ideias, transformando sua mente em um campo
-          fértil para a inovação.
+          {description}
         </p>
 
         {/* Author Section */}
@@ -55,7 +67,7 @@ export const PostCard = () => {
           <div className="flex items-center gap-3">
             <div className="relative h-8 w-8 md:h-10 md:w-10 overflow-hidden rounded-full ring-2 ring-gray-600/50 group-hover:ring-blue-500/50 transition-all duration-300">
               <Image
-                src={authorImagePath || "/placeholder.svg"}
+                src={author.avatar || authorImagePath}
                 alt="Mariana Takahashi"
                 fill
                 className="object-cover"
@@ -65,7 +77,7 @@ export const PostCard = () => {
               <div className="flex items-center gap-1.5">
                 <User className="w-3 h-3 text-gray-500" />
                 <span className="text-sm font-medium text-gray-300 group-hover:text-gray-200 transition-colors duration-300">
-                  Mariana Takahashi
+                  {author.name || "Mariana Takahashi"}
                 </span>
               </div>
               <span className="text-xs text-gray-500">Autora</span>

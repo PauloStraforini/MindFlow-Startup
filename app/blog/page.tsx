@@ -2,6 +2,7 @@ import { PostCard } from "@/components/ui/post-card";
 import { Search } from "@/components/ui/search";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { PostGridCard } from "@/components/ui/post-grid-card";
 
 export default function BlogPage() {
     return (
@@ -48,7 +49,43 @@ export default function BlogPage() {
                 </header>
 
                 {/* Blog Posts Grid */}
-                <PostCard />
+                <PostGridCard>
+                    <PostCard
+                        title="Transformando seu negócio em uma loja virtual"
+                        description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online..."
+                        date="20/12/2024"
+                        slug="transformando"
+                        image="/assets/primeiro-post.png"
+                        author={{
+                            avatar: '/customer-01.png',
+                            name: 'Aspen Dokidis',
+                        }}
+                    />
+
+                     <PostCard
+                        title="Transformando seu negócio em uma loja virtual"
+                        description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online..."
+                        date="20/12/2024"
+                        slug="transformando"
+                        image="/assets/primeiro-post.png"
+                        author={{
+                            avatar: '/customer-01.png',
+                            name: 'Aspen Dokidis',
+                        }}
+                    />
+
+                     <PostCard
+                        title="Transformando seu negócio em uma loja virtual"
+                        description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online..."
+                        date="20/12/2024"
+                        slug="transformando"
+                        image="/assets/primeiro-post.png"
+                        author={{
+                            avatar: '/customer-01.png',
+                            name: 'Aspen Dokidis',
+                        }}
+                    />
+                </PostGridCard>
 
             </div>
         </section>
