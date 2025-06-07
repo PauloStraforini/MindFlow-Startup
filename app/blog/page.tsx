@@ -1,8 +1,16 @@
-import { PostCard } from "@/components/ui/post-card";
-import { Search } from "@/components/ui/search";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { PostGridCard } from "@/components/ui/post-grid-card";
+import { Suspense } from "react";
+import { BlogContent } from "./blog-content"; // Import the new component
+
+// A fallback component to show while the client component is loading
+function LoadingSpinner() {
+    return (
+        <div className="w-full flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white"></div>
+        </div>
+    );
+}
 
 export default function BlogPage() {
     return (
@@ -27,67 +35,10 @@ export default function BlogPage() {
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
-                <header className="mb-16">
-                    <div className="space-y-6 flex flex-col items-start justify-between md:flex-row md:items-end lg:items-end">
-                        <div className="flex flex-col gap-4 md:px-0">
-                            {/* TAG */}
-                            <div className="inline-flex items-center px-4 py-2 bg-purple-500/30 rounded-full text-white font-medium text-sm border border-purple-400/30 backdrop-blur-sm w-fit">
-                                BLOG
-                            </div>
-
-                            {/* Titulo */}
-                            <h1 className="text-balance text-start md:text-left text-4xl md:text-5xl lg:text-6xl font-bold leading-tight max-w-2xl text-white">
-                                Explore insights, tendências e dicas exclusivas
-                            </h1>
-                        </div>
-
-                        {/* Search Section - Positioned on the right */}
-                        <div className="flex items-end">
-                            <Search />
-                        </div>
-                    </div>
-                </header>
-
-                {/* Blog Posts Grid */}
-                <PostGridCard>
-                    <PostCard
-                        title="Transformando seu negócio em uma loja virtual"
-                        description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online..."
-                        date="20/12/2024"
-                        slug="transformando"
-                        image="/assets/primeiro-post.png"
-                        author={{
-                            avatar: '/customer-01.png',
-                            name: 'Aspen Dokidis',
-                        }}
-                    />
-
-                     <PostCard
-                        title="Transformando seu negócio em uma loja virtual"
-                        description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online..."
-                        date="20/12/2024"
-                        slug="transformando"
-                        image="/assets/primeiro-post.png"
-                        author={{
-                            avatar: '/customer-01.png',
-                            name: 'Aspen Dokidis',
-                        }}
-                    />
-
-                     <PostCard
-                        title="Transformando seu negócio em uma loja virtual"
-                        description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online..."
-                        date="20/12/2024"
-                        slug="transformando"
-                        image="/assets/primeiro-post.png"
-                        author={{
-                            avatar: '/customer-01.png',
-                            name: 'Aspen Dokidis',
-                        }}
-                    />
-                </PostGridCard>
-
+                <Suspense fallback={<LoadingSpinner />}>
+                    <BlogContent />
+                </Suspense>
             </div>
         </section>
-    )
+    );
 }

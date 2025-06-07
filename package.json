@@ -7,7 +7,8 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "custom:install-and-build": "npm install --legacy-peer-deps && npx next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
