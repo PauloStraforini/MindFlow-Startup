@@ -1,10 +1,20 @@
-import { defineDocumentType, makeSource } from 'contentlayer/source-files';
+import {
+  defineDocumentType,
+  defineNestedType,
+  makeSource,
+} from 'contentlayer/source-files';
 
-const Author = defineDocumentType(() => ({
+const Author = defineNestedType(() => ({
   name: 'Author',
   fields: {
-    name: { type: 'string', required: true },
-    avatar: { type: 'string', required: true },
+    name: {
+      type: 'string',
+      required: true,
+    },
+    avatar: {
+      type: 'string',
+      required: true,
+    },
   },
 }));
 
@@ -16,10 +26,10 @@ export const Post = defineDocumentType(() => ({
     date: { type: 'date', required: true },
     description: { type: 'string', required: true },
     image: { type: 'string', required: true },
-    author: { 
-      type: 'reference',
-      required: true,
+    author: {
+      type: 'nested',
       of: Author,
+      required: true,
     },
   },
   computedFields: {
