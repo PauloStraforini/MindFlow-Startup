@@ -1,3 +1,4 @@
+import { Avatar } from '@/components/avatar';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -36,17 +37,18 @@ export const PostCard = ({
           <div className="absolute top-0 right-0 px-3 py-1 bg-gray-600 backdrop-blur-sm rounded-bl-[10px]">
             <span className="text-body-xs text-gray-300">{date}</span>
           </div>
+
           <Image
             src={image}
-            alt=""
+            alt={title}
             width={288}
             height={144}
-            className="w-full h-40 object-cover object-center rounded-t-[8px]"
+            className="w-full h-40 object-cover object-center rounded-[8px]"
           />
         </div>
 
         {/* Post info */}
-        <div className="px-2 mt-4 space-y-4">
+        <div className="px-2 my-4 space-y-4">
           <h2 className="text-heading-sm text-gray-100 line-clamp-3">
             {title}
           </h2>
@@ -58,15 +60,10 @@ export const PostCard = ({
 
         {/* Post footer */}
         <div className="flex items-center gap-3 border-t border-gray-400 py-4">
-          <div className="relative h-5 w-5 md:h-6 md:w-6 overflow-hidden rounded-full border-blue-200 border-[1px]">
-            <Image
-              src={author.avatar}
-              alt=""
-              fill
-              className="object-cover rounded-md"
-            />
-          </div>
-          <span className="text-body-sm text-gray-300">{author.name}</span>
+          <Avatar.Container>
+            <Avatar.Image src={author.avatar} alt={author.name} size="xs" />
+            <Avatar.Title>{author.name}</Avatar.Title>
+          </Avatar.Container>
         </div>
       </div>
     </Link>

@@ -4,5 +4,5 @@
 import { BlogList } from '@/components/pages/blog/blog-list';
 
 export default function BlogPage() {
-  return <BlogList />;
+  return <BlogList posts={[]} />;
 }
