@@ -2,15 +2,15 @@
 import { useState, useEffect } from "react";
 
 
-import Hero from "@/components/pages/hero";
-import Features from "@/components/pages/features";
-import Header from "@/components/pages/header";
-import Works from "@/components/pages/works";
-import Benefits from "@/components/pages/benefits";
-import Testimonials from "@/components/pages/testimonials";
-import Psychologists from "@/components/pages/psychologists";
-import Princing from "@/components/pages/pricing"
-import Footer from "@/components/pages/footer";
+import Hero from "@/components/pages/landing-page/hero";
+import Features from "@/components/pages/landing-page/features";
+import Header from "@/components/pages/landing-page/header";
+import Works from "@/components/pages/landing-page/works";
+import Benefits from "@/components/pages/landing-page/benefits";
+import Testimonials from "@/components/pages/landing-page/testimonials";
+import Psychologists from "@/components/pages/landing-page/psychologists";
+import Princing from "@/components/pages/landing-page/pricing"
+import Footer from "@/components/pages/landing-page/footer";
 
 
 export default function Home() {
@@ -42,6 +42,7 @@ export default function Home() {
 
         {/* Pricing */}
         <Princing />
+        
       </main>
 
       {/* Footer */}

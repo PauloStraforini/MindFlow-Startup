@@ -3,7 +3,7 @@
 import type React from "react";
 import { Sparkles, Check, ArrowRight } from "lucide-react";
 
-import useMercadoPago from "../../hooks/useMercadoPago";
+import useMercadoPago from "../../../hooks/useMercadoPago";
 
 interface PlanProps {
   name: string;
