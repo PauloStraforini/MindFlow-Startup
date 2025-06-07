@@ -5,6 +5,7 @@ import Image from "next/image";
 import User2 from "@/components/images/user_2.jpg";
 import User3 from "@/components/images/user_3.jpg";
 import User4 from "@/components/images/user_4.jpg";
+import Link from "next/link";
 
 export default function Testimonials() {
     const depoimentos = [
@@ -68,8 +69,8 @@ export default function Testimonials() {
                                     <Star
                                         key={i}
                                         className={`w-5 h-5 ${i < item.stars
-                                                ? "fill-yellow-400 text-yellow-400"
-                                                : "text-gray-500"
+                                            ? "fill-yellow-400 text-yellow-400"
+                                            : "text-gray-500"
                                             }`}
                                     />
                                 ))}
@@ -96,12 +97,12 @@ export default function Testimonials() {
                     ))}
                 </div>
                 <div className="flex justify-center mt-12">
-                    <a
+                    <Link
                         href="/blog"
                         className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-blue-500/30"
                     >
-                        Veja Oque os Psicólogos Estão Dizendo
-                    </a>
+                        Veja O que os Psicólogos Estão Dizendo
+                    </Link>
                 </div>
             </div>
 
