@@ -1,5 +1,13 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
 
+const Author = defineDocumentType(() => ({
+  name: 'Author',
+  fields: {
+    name: { type: 'string', required: true },
+    avatar: { type: 'string', required: true },
+  },
+}));
+
 export const Post = defineDocumentType(() => ({
   name: 'Post',
   filePathPattern: `**/*.md`,
@@ -8,6 +16,11 @@ export const Post = defineDocumentType(() => ({
     date: { type: 'date', required: true },
     description: { type: 'string', required: true },
     image: { type: 'string', required: true },
+    author: { 
+      type: 'reference',
+      required: true,
+      of: Author,
+    },
   },
   computedFields: {
     slug: {
