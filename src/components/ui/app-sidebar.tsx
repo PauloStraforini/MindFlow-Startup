@@ -30,15 +30,15 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
   SidebarFooter,
-} from "@/components/ui/sidebar";
-import { Input } from "@/components/ui/input";
+} from "@/src/components/ui/sidebar";
+import { Input } from "@/src/components/ui/input";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from "@/src/components/ui/collapsible";
 
-import { SingOut } from "@/components/actions/singOut";
+import { SingOut } from "@/src/components/actions/singOut";
 
 
 // This is sample data.

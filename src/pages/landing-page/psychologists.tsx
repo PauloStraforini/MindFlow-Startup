@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { Sparkles, Heart, Shield, Calendar } from "lucide-react"
-import User1 from "@/components/images/primeiro-post.png";
+import User1 from "@/public/assets/primeiro-post.png";
 
 
 interface SectionPsicologosProps {

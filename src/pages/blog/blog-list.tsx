@@ -32,7 +32,7 @@ export function BlogList({ posts }: BlogListProps) {
       }}
     >
       {/* Overlay for better readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-sky-900/80 via-purple-900/80 to-indigo-900/80"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-sky-800 to-purple-800"></div>
 
       {/* Floating decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

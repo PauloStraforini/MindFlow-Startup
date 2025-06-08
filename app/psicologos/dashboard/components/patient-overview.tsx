@@ -3,10 +3,10 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/src/components/ui/card"
+import { Button } from "@/src/components/ui/button"
+import { Progress } from "@/src/components/ui/progress"
+import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/tabs"
 import { Users, FileText, TrendingUp, ChevronRight, PieChart } from "lucide-react"
 
 export function PatientOverview() {

@@ -1,11 +1,11 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/src/components/ui/avatar"
 import { Calendar, Clock, FileText, Users, CheckCircle2, AlertCircle, MoreHorizontal } from "lucide-react"
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
 import Image from "next/image"
 
-import Psy from "@/components/images/figurePsy.png"
+import Psy from "@/public/assets/figurePsy.png"
 
 export default async function DoctorHeader() {
     const session = await auth()
@@ -195,16 +195,16 @@ export default async function DoctorHeader() {
                             <AvatarFallback className="bg-pink-200 text-pink-700 text-xl">
                                 {session?.user?.name
                                     ? session.user.name
-                                          .split(" ")
-                                          .map((n) => n[0])
-                                          .join("")
+                                        .split(" ")
+                                        .map((n) => n[0])
+                                        .join("")
                                     : "U"}
                             </AvatarFallback>
                         </Avatar>
                         <div>
                             <CardTitle className="text-2xl font-bold text-white drop-shadow">
                                 Bem-vindo ao MindFlow,
-                                    {session?.user?.name ? session.user.name : "Usuário"}
+                                {session?.user?.name ? session.user.name : "Usuário"}
                             </CardTitle>
                             <p className="text-sm text-blue-100 mt-1">
                                 Tenha um ótimo dia de trabalho! Aqui estão seus dados mais recentes.
@@ -308,7 +308,7 @@ export default async function DoctorHeader() {
                             </div>
                         </CardContent>
                     </Card>
-                </div>               
+                </div>
             </div>
         </div>
     )

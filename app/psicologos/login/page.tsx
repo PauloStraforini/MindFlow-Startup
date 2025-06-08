@@ -1,6 +1,6 @@
 "use client";
 
-import SingIn from "@/components/ui/SingIn";
+import SingIn from "@/src/components/ui/SingIn";
 
 export default function LoginPage() {
   return (

@@ -1,7 +1,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { Preference } from 'mercadopago';
-import mpClient from "@/lib/mercado-pago";
+import mpClient from "@/src/lib/mercado-pago";
 
 export async function POST(req: NextRequest) {
     const {testeId, userEmail} = await req.json();

@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/ui/app-sidebar";
+import { AppSidebar } from "@/src/components/ui/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,21 +6,21 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
+} from "@/src/components/ui/breadcrumb";
+import { Separator } from "@/src/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
+} from "@/src/components/ui/sidebar";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+} from "@/src/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/src/components/ui/avatar";
 import {
   Calendar,
   Clock,

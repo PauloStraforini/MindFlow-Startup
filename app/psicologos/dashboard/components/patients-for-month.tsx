@@ -1,11 +1,11 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/src/components/ui/card"
+import { Button } from "@/src/components/ui/button"
+import { Avatar, AvatarFallback } from "@/src/components/ui/avatar"
+import { Badge } from "@/src/components/ui/badge"
+import { Progress } from "@/src/components/ui/progress"
+import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/tabs"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"
 import { Users, Calendar, FileText, Clock, User, BellRing, ArrowUpRight, MoreHorizontal, ChevronRight, Brain, Activity, Heart } from 'lucide-react'
 

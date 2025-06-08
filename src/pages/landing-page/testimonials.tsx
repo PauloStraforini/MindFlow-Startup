@@ -2,9 +2,9 @@
 
 import { Sparkles, Star } from "lucide-react";
 import Image from "next/image";
-import User2 from "@/components/images/user_2.jpg";
-import User3 from "@/components/images/user_3.jpg";
-import User4 from "@/components/images/user_4.jpg";
+import User2 from "@/public/assets/user_2.jpg";
+import User3 from "@/public/assets/user_3.jpg";
+import User4 from "@/public/assets/user_4.jpg";
 import Link from "next/link";
 
 export default function Testimonials() {
@@ -98,10 +98,10 @@ export default function Testimonials() {
                 </div>
                 <div className="flex justify-center mt-12">
                     <Link
-                        href="/blog"
+                        href="./blog"
                         className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-blue-500/30"
                     >
-                        Veja O que os Psicólogos Estão Dizendo
+                        Veja o que os Psicólogos Estão Dizendo
                     </Link>
                 </div>
             </div>
