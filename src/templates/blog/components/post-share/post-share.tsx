@@ -1,6 +1,6 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { useShare } from '@/hooks';
+import { Button } from '@/src/components/ui/button';
+import { useShare } from '@/src/hooks/use-share/use-share';
 
 type PostShareProps = {
   url: string;

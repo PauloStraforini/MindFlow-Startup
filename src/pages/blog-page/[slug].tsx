@@ -1,4 +1,4 @@
-import { PostPage as Post, type PostPageProps } from '@/components/pages/blog/post-page';
+import { PostPage as Post, type PostPageProps } from '@/src/templates/blog';
 import { allPosts } from 'contentlayer/generated';
 import { GetStaticPaths, GetStaticProps } from 'next';
 

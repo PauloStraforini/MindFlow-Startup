@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/src/lib/utils';
 import Image, { ImageProps } from 'next/image';
 
 type AvatarSize = 'xs' | 'sm';

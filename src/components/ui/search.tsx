@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/src/lib/utils"
 import { CircleX, SearchIcon } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useCallback } from "react"
@@ -10,7 +10,7 @@ import { useCallback } from "react"
 export const Search = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const query = searchParams.get("q") ?? ""
+  const query = searchParams?.get("q") ?? ""
 
   const handleSearch = useCallback(
     (event: React.FormEvent) => {

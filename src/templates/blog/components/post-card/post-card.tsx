@@ -1,4 +1,4 @@
-import { Avatar } from '@/components/avatar';
+import { Avatar } from '@/src/components/avatar';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -40,7 +40,7 @@ export const PostCard = ({
 
           <Image
             src={image}
-            alt={title}
+            alt=""
             width={288}
             height={144}
             className="w-full h-40 object-cover object-center rounded-[8px]"
